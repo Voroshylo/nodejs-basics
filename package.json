@@ -12,11 +12,13 @@
   "keywords": [],
   "author": "Voroshylo Sergiy <sergeyvoroshilo@gmail.com>",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@eslint/js": "^9.10.0",
     "eslint": "^9.10.0",
     "globals": "^15.9.0",
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
