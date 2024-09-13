@@ -1,6 +1,11 @@
+import { initMongoDB } from './db/initMongoDB.js';
 import { startServer } from './server.js';
+const bootstrap = async () => {
+  await initMongoDB();
+  startServer();
+};
 
-startServer();
+bootstrap();
 
 // import express from 'express';
 // import pino from 'pino-http';
