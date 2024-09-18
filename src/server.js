@@ -38,7 +38,6 @@ export const startServer = () => {
   app.get('/students/:studentId', async (req, res, next) => {
     const { studentId } = req.params;
 
-    // Перевірка на валідність ObjectId перед пошуком в базі
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
       return res.status(400).json({
         message: 'Invalid student ID format',
