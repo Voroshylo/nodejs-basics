@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   getStudentsController,
   getStudentsByIdController,
+  createStudentController,
 } from '../controllers/students.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 // import { getAllStudents, getStudentsById } from '../services/students.js';
@@ -12,6 +13,8 @@ const router = Router();
 router.get('/students', ctrlWrapper(getStudentsController));
 
 router.get('/students/:studentId', ctrlWrapper(getStudentsByIdController));
+
+router.post('/students', ctrlWrapper(createStudentController));
 
 export default router;
 // router.get('/students', async (req, res) => {
