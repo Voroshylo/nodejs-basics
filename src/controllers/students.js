@@ -83,5 +83,8 @@ export const deleteStudentController = async (req, res) => {
   if (!student) {
     throw createHttpError(404, 'student not found');
   }
-  res.sendStatus(204);
+  res.json({
+    status: 204,
+    message: 'student deleted!',
+  });
 };

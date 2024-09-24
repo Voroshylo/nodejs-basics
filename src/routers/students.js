@@ -8,6 +8,8 @@ import {
   patchStudentController,
 } from '../controllers/students.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { validateBody } from '../middleware/validateBody.js';
+import { createStudentSchema } from '../validation/students.js';
 // import { getAllStudents, getStudentsById } from '../services/students.js';
 // import mongoose from 'mongoose';
 
@@ -24,6 +26,12 @@ router.put('/students/:studentId', ctrlWrapper(upsertStudentController));
 router.patch('/students/:studentId', ctrlWrapper(patchStudentController));
 
 router.delete('/students/:studentId', ctrlWrapper(deleteStudentController));
+
+router.post(
+  '/',
+  validateBody(createStudentSchema),
+  ctrlWrapper(createStudentController),
+);
 
 export default router;
 // router.get('/students', async (req, res) => {

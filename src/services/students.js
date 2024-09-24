@@ -32,11 +32,7 @@ export const updateStudent = async (studentId, payload, options = {}) => {
   };
 };
 
-export const deleteStudentById = async (req, res) => {
-  const { studentId } = req.params;
-  const student = await deleteStudentById(studentId);
-  res.status(200).json({
-    message: 'Student deleted',
-    student,
-  });
+export const deleteStudentById = async (studentId) => {
+  const student = await StudentsCollection.findByIdAndDelete(studentId);
+  return student;
 };
