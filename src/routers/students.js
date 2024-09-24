@@ -10,6 +10,8 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middleware/validateBody.js';
 import { createStudentSchema } from '../validation/students.js';
+import { updateStudentSchema } from '../validation/students.js';
+import { isValidId } from '../middleware/isValidId.js';
 // import { getAllStudents, getStudentsById } from '../services/students.js';
 // import mongoose from 'mongoose';
 
@@ -17,15 +19,33 @@ const router = Router();
 
 router.get('/students', ctrlWrapper(getStudentsController));
 
-router.get('/students/:studentId', ctrlWrapper(getStudentsByIdController));
+router.get(
+  '/students/:studentId',
+  isValidId,
+  ctrlWrapper(getStudentsByIdController),
+);
 
 router.post('/students', ctrlWrapper(createStudentController));
 
-router.put('/students/:studentId', ctrlWrapper(upsertStudentController));
+router.put(
+  '/students/:studentId',
+  isValidId,
+  validateBody(createStudentSchema),
+  ctrlWrapper(upsertStudentController),
+);
 
-router.patch('/students/:studentId', ctrlWrapper(patchStudentController));
+router.patch(
+  '/students/:studentId',
+  isValidId,
+  validateBody(updateStudentSchema),
+  ctrlWrapper(patchStudentController),
+);
 
-router.delete('/students/:studentId', ctrlWrapper(deleteStudentController));
+router.delete(
+  '/students/:studentId',
+  isValidId,
+  ctrlWrapper(deleteStudentController),
+);
 
 router.post(
   '/',
