@@ -35,12 +35,6 @@ export const startServer = () => {
   app.use('*', notFoundHandler);
   app.use(errorHandler);
 
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Не знайдено',
-    });
-  });
-
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
