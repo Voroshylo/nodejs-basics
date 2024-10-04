@@ -9,8 +9,10 @@ import {
 } from '../controllers/students.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middleware/validateBody.js';
-import { createStudentSchema } from '../validation/students.js';
-import { updateStudentSchema } from '../validation/students.js';
+import {
+  createStudentSchema,
+  updateStudentSchema,
+} from '../validation/students.js';
 import { isValidId } from '../middleware/isValidId.js';
 // import { getAllStudents, getStudentsById } from '../services/students.js';
 // import mongoose from 'mongoose';
@@ -25,7 +27,11 @@ router.get(
   ctrlWrapper(getStudentsByIdController),
 );
 
-router.post('/students', ctrlWrapper(createStudentController));
+router.post(
+  '/students',
+  validateBody(createStudentSchema),
+  ctrlWrapper(createStudentController),
+);
 
 router.put(
   '/students/:studentId',

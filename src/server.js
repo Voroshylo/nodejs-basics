@@ -2,7 +2,7 @@ import express from 'express';
 // import mongoose from 'mongoose';
 import pino from 'pino-http';
 import cors from 'cors';
-import studentsRouter from './routers/students.js';
+import router from './routers/index.js';
 import { env } from './utils/env.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -31,7 +31,7 @@ export const startServer = () => {
     });
   });
 
-  app.use(studentsRouter);
+  app.use(router);
   app.use('*', notFoundHandler);
   app.use(errorHandler);
 
