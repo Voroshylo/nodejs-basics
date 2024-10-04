@@ -1,6 +1,7 @@
 import express from 'express';
 // import mongoose from 'mongoose';
 import pino from 'pino-http';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import router from './routers/index.js';
 import { env } from './utils/env.js';
@@ -16,6 +17,7 @@ export const startServer = () => {
 
   app.use(express.json());
   app.use(cors());
+  app.use(cookieParser());
 
   app.use(
     pino({

@@ -14,8 +14,9 @@ import {
   updateStudentSchema,
 } from '../validation/students.js';
 import { isValidId } from '../middleware/isValidId.js';
-// import { getAllStudents, getStudentsById } from '../services/students.js';
-// import mongoose from 'mongoose';
+import { authenticate } from '../middleware/authenticate.js';
+import { checkRoles } from '../middleware/checkRoles.js';
+import { ROLES } from '../constants/index.js';
 
 const router = Router();
 
@@ -23,18 +24,21 @@ router.get('/students', ctrlWrapper(getStudentsController));
 
 router.get(
   '/students/:studentId',
+  checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
   ctrlWrapper(getStudentsByIdController),
 );
 
 router.post(
   '/students',
+  checkRoles(ROLES.TEACHER),
   validateBody(createStudentSchema),
   ctrlWrapper(createStudentController),
 );
 
 router.put(
   '/students/:studentId',
+  checkRoles(ROLES.TEACHER),
   isValidId,
   validateBody(createStudentSchema),
   ctrlWrapper(upsertStudentController),
@@ -42,6 +46,7 @@ router.put(
 
 router.patch(
   '/students/:studentId',
+  checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
   validateBody(updateStudentSchema),
   ctrlWrapper(patchStudentController),
@@ -49,6 +54,7 @@ router.patch(
 
 router.delete(
   '/students/:studentId',
+  checkRoles(ROLES.TEACHER),
   isValidId,
   ctrlWrapper(deleteStudentController),
 );
@@ -59,35 +65,7 @@ router.post(
   ctrlWrapper(createStudentController),
 );
 
+router.use(authenticate);
+router.get('/', checkRoles(ROLES.TEACHER), ctrlWrapper(getStudentsController));
+
 export default router;
-// router.get('/students', async (req, res) => {
-//   const students = await getAllStudents();
-//   res.status(200).json({
-//     data: students,
-//   });
-// });
-
-// router.get('/students/:studentId', async (req, res, next) => {
-//   const { studentId } = req.params;
-
-//   if (!mongoose.Types.ObjectId.isValid(studentId)) {
-//     return res.status(400).json({
-//       message: 'Invalid student ID format',
-//     });
-//   }
-
-//   try {
-//     const student = await getStudentsById(studentId);
-//     if (!student) {
-//       return res.status(404).json({
-//         message: 'Student not found',
-//       });
-//     }
-
-//     res.status(200).json({
-//       data: student,
-//     });
-//   } catch (error) {
-//     next(error); // Передаємо помилку в обробник помилок
-//   }
-// });
