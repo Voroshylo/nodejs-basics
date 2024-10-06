@@ -20,7 +20,7 @@ import { ROLES } from '../constants/index.js';
 
 const router = Router();
 
-router.get('/students', ctrlWrapper(getStudentsController));
+router.get('/', ctrlWrapper(getStudentsController));
 
 router.get(
   '/students/:studentId',
