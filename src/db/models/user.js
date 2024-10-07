@@ -13,13 +13,10 @@ const usersSchema = new Schema(
       default: ROLES.PARENT,
     },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  },
+  { timestamps: true, versionKey: false },
 );
 
-usersSchema.method.toJSON = function () {
+usersSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   return obj;
